@@ -80,8 +80,8 @@ public class GitLabPluginConfiguration {
     
     public List<String> projectKey() {
         Properties reportTaskProps = readReportTaskProperties();
-        String project = reportTaskProps.getProperty("projectKey").orElse(null);
-        return projectKey;
+        String parmProjectKey = reportTaskProps.getProperty("projectKey").orElse(null);
+        return parmProjectKey;
     }
     
     private Properties readReportTaskProperties() {
