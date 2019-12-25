@@ -34,11 +34,8 @@ import javax.annotation.CheckForNull;
 import java.net.*;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
-import java.io.File;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
+import org.sonar.scanner.report;
 
 @ScannerSide
 public class GitLabPluginConfiguration {
@@ -54,8 +51,8 @@ public class GitLabPluginConfiguration {
     private final Configuration configuration;
     private final System2 system2;
     private final String baseUrl;
-    private File projectBaseDir;
-    private File workDir;
+
+    private final CeTaskReportDataHolder ceTaskReportDataHolder;
 
     public GitLabPluginConfiguration(Configuration configuration, System2 system2) {
         super();
@@ -86,21 +83,8 @@ public class GitLabPluginConfiguration {
     }
     
     public List<String> projectKey() {
-        Properties reportTaskProps = readReportTaskProperties();
-        String parmProjectKey = reportTaskProps.getProperty("projectKey").orElse(null);
+        String parmProjectKey = ceTaskReportDataHolder.getDashboardUrl();
         return parmProjectKey;
-    }
-    
-    private Properties readReportTaskProperties() {
-        File reportTaskFile = new File(workDir, "report-task.txt");
-
-        Properties properties = new Properties();
-        try {
-            properties.load(Files.newReader(reportTaskFile, StandardCharsets.UTF_8));
-        } catch (IOException e) {
-            throw new IllegalStateException("Unable to load properties from file " + reportTaskFile, e);
-        }
-        return properties;
     }
 
     @CheckForNull
