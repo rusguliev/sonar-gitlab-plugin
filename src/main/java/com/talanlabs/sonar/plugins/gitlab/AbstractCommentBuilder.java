@@ -93,7 +93,6 @@ public abstract class AbstractCommentBuilder {
         Map<String, Object> root = new HashMap<>();
         // Config
         root.put("projectId", gitLabPluginConfiguration.projectId());
-        root.put("projectKey", gitLabPluginConfiguration.projectKey());
         root.put("commitSHA", gitLabPluginConfiguration.commitSHA());
         root.put("refName", gitLabPluginConfiguration.refName());
         root.put("url", gitLabPluginConfiguration.url());
