@@ -77,6 +77,24 @@ public class GitLabPluginConfiguration {
     public List<String> commitSHA() {
         return Arrays.asList(configuration.getStringArray(GitLabPlugin.GITLAB_COMMIT_SHA));
     }
+    
+    public List<String> projectKey() {
+        Properties reportTaskProps = readReportTaskProperties();
+        String project = reportTaskProps.getProperty("projectKey").orElse(null);
+        return projectKey;
+    }
+    
+    private Properties readReportTaskProperties() {
+        File reportTaskFile = new File(workDir, "report-task.txt");
+
+        Properties properties = new Properties();
+        try {
+            properties.load(Files.newReader(reportTaskFile, StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to load properties from file " + reportTaskFile, e);
+        }
+        return properties;
+    }
 
     @CheckForNull
     public String refName() {
