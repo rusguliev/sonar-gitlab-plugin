@@ -89,7 +89,7 @@ public class GitLabPluginConfiguration {
 
     public String dashUrl() {
         Properties reportTaskProps = readReportTaskProperties();
-        String parmDashUrl = reportTaskProps.getProperty("projectKey");
+        String parmDashUrl = reportTaskProps.getProperty("dashboardUrl");
         return parmDashUrl;
     }
 
