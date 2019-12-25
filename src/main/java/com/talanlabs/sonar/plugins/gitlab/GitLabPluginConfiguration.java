@@ -34,6 +34,11 @@ import javax.annotation.CheckForNull;
 import java.net.*;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 
 @ScannerSide
 public class GitLabPluginConfiguration {
@@ -49,6 +54,8 @@ public class GitLabPluginConfiguration {
     private final Configuration configuration;
     private final System2 system2;
     private final String baseUrl;
+    private File projectBaseDir;
+    private File workDir;
 
     public GitLabPluginConfiguration(Configuration configuration, System2 system2) {
         super();
