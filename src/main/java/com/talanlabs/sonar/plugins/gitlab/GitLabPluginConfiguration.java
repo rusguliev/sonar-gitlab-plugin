@@ -35,6 +35,12 @@ import java.net.*;
 import java.util.Arrays;
 import java.util.List;
 
+import com.google.common.io.Files;
+import java.util.Properties;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+
 @ScannerSide
 public class GitLabPluginConfiguration {
 
@@ -49,6 +55,9 @@ public class GitLabPluginConfiguration {
     private final Configuration configuration;
     private final System2 system2;
     private final String baseUrl;
+
+    private File projectBaseDir;
+    private File workDir;
 
     public GitLabPluginConfiguration(Configuration configuration, System2 system2) {
         super();
@@ -78,9 +87,22 @@ public class GitLabPluginConfiguration {
         return Arrays.asList(configuration.getStringArray(GitLabPlugin.GITLAB_COMMIT_SHA));
     }
 
-    public List<String> projectKey() {
-        String parmProjectKey = ceTaskReportDataHolder.getDashboardUrl();
-        return parmProjectKey;
+    public String dashUrl() {
+        Properties reportTaskProps = readReportTaskProperties();
+        String parmDashUrl = reportTaskProps.getProperty("projectKey");
+        return parmDashUrl;
+    }
+
+    private Properties readReportTaskProperties() {
+        File reportTaskFile = new File(workDir, "report-task.txt");
+
+        Properties properties = new Properties();
+        try {
+            properties.load(Files.newReader(reportTaskFile, StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to load properties from file " + reportTaskFile, e);
+        }
+        return properties;
     }
 
     @CheckForNull
