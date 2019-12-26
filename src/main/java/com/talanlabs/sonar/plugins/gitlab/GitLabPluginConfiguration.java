@@ -59,6 +59,11 @@ public class GitLabPluginConfiguration {
     private File projectBaseDir;
     private File workDir;
 
+    public void init(File projectBaseDir, File workDir) {
+        this.projectBaseDir = projectBaseDir;
+        this.workDir = workDir;
+    }
+
     public GitLabPluginConfiguration(Configuration configuration, System2 system2) {
         super();
 
@@ -89,7 +94,7 @@ public class GitLabPluginConfiguration {
 
     public String dashUrl() {
         Properties reportTaskProps = readReportTaskProperties();
-        String parmDashUrl = reportTaskProps.getProperty("projectKey");
+        String parmDashUrl = reportTaskProps.getProperty("dashboardUrl");
         return parmDashUrl;
     }
 

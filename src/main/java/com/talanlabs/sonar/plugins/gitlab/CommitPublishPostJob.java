@@ -86,6 +86,7 @@ public class CommitPublishPostJob implements PostJob {
             }
             sonarFacade.init(baseDir, workDir);
             commitFacade.init(baseDir);
+            gitLabPluginConfiguration.init(baseDir, workDir);
 
             if (StatusNotificationsMode.COMMIT_STATUS.equals(gitLabPluginConfiguration.statusNotificationsMode())) {
                 commitFacade.createOrUpdateSonarQubeStatus(gitLabPluginConfiguration.buildInitState().getMeaning(), "SonarQube analysis in progress");
